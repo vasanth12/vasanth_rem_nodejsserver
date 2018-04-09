@@ -4,6 +4,7 @@ import path from 'path';
 const app = express();
 
 app.post('/api/auth', (req, res) => {
+  console.log('coming here to server');
   res.status(400).json({errors: {global:"Invalid credentials"} });
 })
 app.get("/*", (req, res) => {
