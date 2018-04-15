@@ -1,12 +1,20 @@
 import express from 'express';
 import path from 'path';
+import mongoose from "mongoose";
+import auth from './routes/auth';
+import bodyParser from "body-parser";
+import Promise from 'bluebird';
+import dotenv from 'dotenv';
 
+
+dotenv.config();
 const app = express();
+app.use(bodyParser.json());
+mongoose.Promise = Promise;
+mongoose.connect(process.env.MONGODB_URL);
 
-app.post('/api/auth', (req, res) => {
-  console.log('coming here to server');
-  res.status(400).json({errors: {global:"Invalid credentials"} });
-})
+app.use('/api/auth',auth);
+
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 })
